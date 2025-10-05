@@ -22,16 +22,15 @@ git clone https://github.com/werter08/Oazis.git
 
 3. Select a simulator or a physical device and press Run (`⌘ + R`).
 
-## 🔑 Challenge Login Details (Mandatory)
+## 🔑## 🔑 Challenge Login Details (Mandatory)
 
-Due to the constraints of the challenge environment, this application uses a hardcoded, temporary administrative account for demonstration and testing purposes.
-
-**To access the application's dashboard, you must use the following credentials:**
+**To access the application's dashboard, you must use the following hardcoded credentials:**
 
 | **Field** | **Value** | 
+| :--- | :--- | 
 | **Username** | `1admin` | 
 | **Password** | `1admin` | 
 
-These credentials are only valid within the scope of the challenge.
+***Note:** These credentials are for demonstration within the challenge scope only.*
 
 *For any issues or questions regarding the LEO Commercialization Challenge interface, please contact the repository owner.*
