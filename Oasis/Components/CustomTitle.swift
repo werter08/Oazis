@@ -27,17 +27,3 @@ struct CustomText: View {
             .foregroundStyle(color ?? type.Color)
     }
 }
-
-#Preview {
-    VStack {
-        CustomText("You make it like a booooss", type: .buttonTitle)
-        CustomText("You make it like a booooss with title", type: .title)
-        CustomText("You make it like a booooss with subTitle", type: .subTitle)
-        
-    }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.bg)
-    
-}
-
-

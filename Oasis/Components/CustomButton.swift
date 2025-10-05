@@ -9,11 +9,17 @@ import SwiftUI
 
 struct CustomButton: View {
     var title: String
+    var icon: String?
+    var color: Color
+    var fullEcran: Bool
     var action: () -> ()
     
-    init(_ title: String, action: @escaping () -> Void) {
+    init(_ title: String, icon: String? = nil, color: Color, fullEcran: Bool = false, action: @escaping () -> Void) {
         self.title = title
+        self.icon = icon
+        self.color = color
         self.action = action
+        self.fullEcran = fullEcran
     }
     
     var body: some View {
@@ -21,20 +27,28 @@ struct CustomButton: View {
         Button {
             action()
         } label: {
-            Text(title)
-                .foregroundStyle(Color.white)
-                .font(.buttonTitle)
+            HStack {
+                if let icon {
+                    Image(icon)
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 24, height: 24)
+                        .scaledToFit()
+                        .foregroundStyle(color)
+                }
+                Text(title)
+                    .foregroundStyle(color)
+                    .font( fullEcran ? .customTitleFont : .buttonTitle)
+                    .frame(maxWidth: fullEcran ? .infinity : nil, alignment: .center)
+            }
         }
-        .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.border)
         .cornerRadius(12)
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(style: .init(lineWidth: 1))
+                .fill(.customDatkGray)
+        }
     
     }
-}
-
-#Preview {
-    CustomButton("Submit") {}
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.bg)
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 class RobotsViewModel: ObservableObject {
-    @Published var moduls: [RobotModel] = []
+    @Published var models: [RobotModel] = []
     var dataManger = DataManager()
     
     private let maxTolerableTemp: Double = 35.0 // Max temp before system is 'bad'
@@ -29,10 +29,15 @@ class RobotsViewModel: ObservableObject {
             if let error = result.complitionError {
                 print(error)
             } else {
-                self.moduls = result.content
+                self.models = result.content
             }
         }
     }
 
+    func getActive() -> Int {
+        var i = 0
+        models.map { i = $0.isActive ? i+1 : i }
+        return i
+    }
 
 }

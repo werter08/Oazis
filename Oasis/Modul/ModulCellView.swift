@@ -13,7 +13,7 @@ struct ModulCellView: View {
     var body: some View {
         VStack {
             HStack {
-                Image(systemName: model.iconName)
+                Image(model.iconName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 36, height: 36)

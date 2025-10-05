@@ -38,8 +38,10 @@ struct ModulsView: View {
             StationStatusCellView(state: viewModel.getSystemStatus())
                 .padding(.bottom)
             
-        }.padding(.horizontal)
+        }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
+            .padding(.horizontal)
             .background(Color.customBlack)
             .environmentObject(viewModel)
     }

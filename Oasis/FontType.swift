@@ -11,6 +11,7 @@ import SwiftUI
 
 enum FontType {
     case buttonTitle
+    case largeLargeTitle
     case largeTitle
     case title
     case largeSubtitle
@@ -23,6 +24,8 @@ enum FontType {
                 .buttonTitle
         case .largeTitle:
                 .largeTitle
+        case .largeLargeTitle:
+                .largeLargeTitle
         case .largeSubtitle:
                 .largeSubTitle
         case .title:
@@ -35,11 +38,13 @@ enum FontType {
     var Color: Color {
         switch self {
         case .buttonTitle:
-                .white
+                .customWhite
         case .largeTitle:
+                .customWhite
+        case .largeLargeTitle:
                 .white
         case .title:
-                .white
+                .customWhite
         case .largeSubtitle:
                 .customBrightGray
         case .subTitle:

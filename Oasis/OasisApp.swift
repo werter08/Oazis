@@ -9,10 +9,14 @@ import SwiftUI
 
 @main
 struct OasisApp: App {
-
+    @State var logedIn = false
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if logedIn {
+                ContentView()
+            } else {
+                LoginView(isLoegIn: $logedIn)
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ struct RobotsOrbit: View {
                     .scaledToFit()
                 
                 // ForEach works because your ModulModel is likely identifiable (by 'id')
-                ForEach(robotsOrbit.moduls) { robot in
+                ForEach(robotsOrbit.models) { robot in
                     if robot.isActive {
                         CustomAnimatedBorderCircle(color: Color(hex: robot.color), size: 24)
                         // Pass the String ID to the offset functions
@@ -33,7 +33,7 @@ struct RobotsOrbit: View {
                                     y: randomYOffset(for: robot.id, in: gridSize.height))
                     } else {
                         Circle()
-                            .fill(Color(hex: robot.color))
+                            .fill(Color.customRed)
                             .frame(width: 18, height: 18)
                             .offset(x: randomXOffset(for: robot.id, in: gridSize.width),
                                     y: randomYOffset(for: robot.id, in: gridSize.height))

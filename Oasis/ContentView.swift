@@ -28,42 +28,42 @@ struct ContentView: View {
                         }
                     
                     TabView(selection: $selectedTab) {
-                        Group {
-                            ModulsView()
-                                .tabItem {
-                                    HStack {
-                                        Image(.browse)
-                                        
-                                        Text("Dashboard")
-                                    }
-                                }
-                                .tag(0)
-                            RobotsView()
-                                .tabItem {
-                                    HStack {
-                                        Image(.robot)
-                                        
-                                        Text("Robots")
-                                    }
-                                }
-                                .tag(1)
-                            
-//                            ProfileView()
-//                                .tabItem {
-//                                    Label("Profile", systemImage: "person.fill")
-//                                }
-//                                .tag(2)
-                        }
                         
-                        .toolbarBackground(Color.customBlack, for: .tabBar)
-                        .toolbarBackground(.visible, for: .tabBar)
-                        .toolbarColorScheme(.dark, for: .tabBar)
-                        .overlay(alignment: .bottom) {
-                          
-                            Rectangle()
-                                .fill(Color.customDatkGray)
-                                .frame(height: 2)
-                        }
+                        ModulsView()
+                            .tabItem {
+                                // FIX: Use Image and Text directly for manual control
+                                Image("browse")
+                                    // CRUCIAL: Force the icon to be treated as a mask that accepts color
+                                    .renderingMode(.template)
+
+                                Text("Dashboard")
+                            }
+                            .tag(0)
+                            
+                        RobotsView()
+                            .tabItem {
+                                // FIX: Use Image and Text directly for manual control
+                                Image("robot")
+                                    // CRUCIAL: Force the icon to be treated as a mask that accepts color
+                                    .renderingMode(.template)
+                                Text("Robots")
+                            }
+                            .tag(1)
+                    }
+                    // ... rest of your modifiers
+                    // Apply all customization modifiers directly to the TabView
+                    .toolbarBackground(Color.customBlack, for: .tabBar)
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarColorScheme(.dark, for: .tabBar)
+                    // 👇 This sets the selected item color
+                    .tint(.accent)
+                    .overlay(alignment: .bottom) {
+                        // This overlay places the border at the TOP of the custom-colored tab bar
+                        Rectangle()
+                            .fill(Color.customDatkGray)
+                            .frame(height: 2)
+                            // Adjust the offset to position it correctly on top of the tab bar
+                            .offset(y: -49) // ~49 pts is the height of the tab bar
                     }
                 }
                 .ignoresSafeArea(.all, edges: .top)
