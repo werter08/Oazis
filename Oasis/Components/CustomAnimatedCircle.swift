@@ -6,19 +6,25 @@
 //
 
 import SwiftUI
+import Combine // Required for the Timer functionality
 
 struct CustomAnimatedBorderCircle: View {
     
     var color: Color
     var size: CGFloat = 64
     var borderWidth: CGFloat = 4.0 // Define a constant border width
+    var animationDuration: Double = 3.0 // The total cycle time
     
-    // State properties to control the animation values
+    // State properties for manual animation control
     @State private var scale: CGFloat = 1.0
-    @State private var opacity: Double = 0.0
+    @State private var opacity: Double = 1.0 // Start at 1.0 for the fading effect
     
-    // The duration of one animation cycle
-    private let animationDuration: Double = 3.0
+    // Timer properties
+    @State private var startTime: Date?
+    @State private var timerSubscription: AnyCancellable?
+    
+    // Define the maximum scale the pulse should reach
+    private let targetScale: CGFloat = 1.4
     
     var body: some View {
         ZStack {
@@ -28,7 +34,7 @@ struct CustomAnimatedBorderCircle: View {
                 // 👇 This creates the border that will animate
                 .stroke(color, lineWidth: borderWidth)
                 .frame(width: size, height: size)
-                // Use opacity for brightness and scale for size
+                // Use the manually updated opacity and scale
                 .opacity(opacity)
                 .scaleEffect(scale)
 
@@ -44,33 +50,57 @@ struct CustomAnimatedBorderCircle: View {
                 )
         }
         .onAppear {
-            startRepeatingAnimation()
+            startTimer()
+        }
+        .onDisappear {
+            stopTimer()
         }
     }
     
-    // MARK: - Animation Logic
+    // MARK: - Manual Timer Logic
     
-    private func startRepeatingAnimation() {
+    private func startTimer() {
+        // Stop any existing timer
+        stopTimer()
         
-        Task {
-            // Loop indefinitely
-            while true {
-                // 1. Reset the state: Small initial scale, near-full opacity (bright)
-                scale = 1.0
-                opacity = 1.0 // Start at full brightness
-                
-                // 2. Animate the border growing larger and fading out.
-                // The animation lasts for 5 seconds.
-                try await Task.sleep(for: .milliseconds(50)) // Small delay for reset
-                
-                withAnimation(.linear(duration: animationDuration)) {
-                    scale = 1.4 // Border grows significantly larger
-                    opacity = 0.0 // Border fades to transparent (darkens/disappears)
-                }
-                
-                // 3. Wait for the animation to finish before repeating
-                try await Task.sleep(for: .seconds(animationDuration))
+        // Record the start time of the cycle
+        startTime = Date()
+        
+        // 1. Create and subscribe to a repeating timer (e.g., updates 60 times per second)
+        timerSubscription = Timer.publish(every: 1.0 / 60.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                // 2. Update the animation state on every tick
+                updateAnimationState()
             }
+    }
+    
+    private func stopTimer() {
+        timerSubscription?.cancel()
+        timerSubscription = nil
+    }
+    
+    private func updateAnimationState() {
+        guard let start = startTime else { return }
+        
+        // Calculate the elapsed time since the start of the animation
+        let elapsed = Date().timeIntervalSince(start)
+        
+        // Calculate the percentage completed for the current cycle (0.0 to 1.0)
+        let percentage = fmod(elapsed, animationDuration) / animationDuration
+        
+        // 1. Update Scale (Interpolate from 1.0 to 1.4)
+        // new_scale = start_scale + (end_scale - start_scale) * percentage
+        scale = 1.0 + (targetScale - 1.0) * percentage
+        
+        // 2. Update Opacity (Interpolate from 1.0 to 0.0)
+        // new_opacity = 1.0 - percentage
+        opacity = 1.0 - percentage
+        
+        // 3. Optional: Reset the cycle for perfect timing
+        if elapsed >= animationDuration {
+            // Restart the cycle by resetting the start time
+            startTime = Date()
         }
     }
 }

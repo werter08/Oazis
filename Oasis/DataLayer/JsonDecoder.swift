@@ -17,10 +17,8 @@ class DataManager {
             let decoder = JSONDecoder()
             let result = try decoder.decode(ResponceResultModel<ModulModel>.self, from: modulData)
 
-            print(result)
             completion(Completion(content: result.content))
         } catch {
-            print(error)
             completion(Completion(content: [], complitionError: .decodeFail))
         }
     }

@@ -29,7 +29,7 @@ struct ContentView: View {
                     
                     TabView(selection: $selectedTab) {
                         Group {
-                            HomeView()
+                            ModulsView()
                                 .tabItem {
                                     HStack {
                                         Image(.browse)
@@ -38,18 +38,21 @@ struct ContentView: View {
                                     }
                                 }
                                 .tag(0)
-                            
-                            ModulsView()
+                            RobotsView()
                                 .tabItem {
-                                    Label("Settings", systemImage: "gearshape.fill")
+                                    HStack {
+                                        Image(.robot)
+                                        
+                                        Text("Robots")
+                                    }
                                 }
                                 .tag(1)
                             
-                            ProfileView()
-                                .tabItem {
-                                    Label("Profile", systemImage: "person.fill")
-                                }
-                                .tag(2)
+//                            ProfileView()
+//                                .tabItem {
+//                                    Label("Profile", systemImage: "person.fill")
+//                                }
+//                                .tag(2)
                         }
                         
                         .toolbarBackground(Color.customBlack, for: .tabBar)

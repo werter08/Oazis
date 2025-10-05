@@ -14,9 +14,12 @@ struct RobotsView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                RobotsOrbit()
+                RobotsOrbit(gridSize: CGSize(width: UIScreen.main.bounds.width - 50, height: UIScreen.main.bounds.width - 50))
             }
         }.environmentObject(viewModel)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.customBlack)
+            .padding()
     }
 }
 
