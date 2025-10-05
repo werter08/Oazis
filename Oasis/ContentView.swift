@@ -9,78 +9,116 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    
+    @State private var selectedTab = 0
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+            ZStack(alignment: .bottom) {
+                
+                VStack(spacing: 0) {
+                    
+                    CustomHeaderView()
+                        .padding(.top, 50)
+                        .overlay(alignment: .bottom) {
+                            Rectangle()
+                                .fill(Color.customDatkGray)
+                                .frame(height: 1)
+                                .frame(maxWidth: .infinity)
+                            
+                        }
+                    
+                    TabView(selection: $selectedTab) {
+                        Group {
+                            HomeView()
+                                .tabItem {
+                                    HStack {
+                                        Image(.browse)
+                                        
+                                        Text("Dashboard")
+                                    }
+                                }
+                                .tag(0)
+                            
+                            ModulsView()
+                                .tabItem {
+                                    Label("Settings", systemImage: "gearshape.fill")
+                                }
+                                .tag(1)
+                            
+                            ProfileView()
+                                .tabItem {
+                                    Label("Profile", systemImage: "person.fill")
+                                }
+                                .tag(2)
+                        }
+                        
+                        .toolbarBackground(Color.customBlack, for: .tabBar)
+                        .toolbarBackground(.visible, for: .tabBar)
+                        .toolbarColorScheme(.dark, for: .tabBar)
+                        .overlay(alignment: .bottom) {
+                          
+                            Rectangle()
+                                .fill(Color.customDatkGray)
+                                .frame(height: 2)
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+                .ignoresSafeArea(.all, edges: .top)
+                
+            
         }
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
+struct CustomHeaderView: View {
+    var body: some View {
+        HStack {
+            Image(.logo)
+            VStack {
+                Text("System Dashboard")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Command Center")
+                    .font(.largeSubTitle)
+                    .foregroundStyle(.customBrightGray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            Spacer()
+//            Image(systemName: "bell.badge")
+//                .font(.title2)
+//                .foregroundStyle(.blue)
+        }
+        
+        .padding()
+        .frame(height: 80)
+        .background(Color.customBlack)
+        
+    }
+}
+
+struct HomeView: View {
+    var body: some View {
+        Text("Welcome Home! (Tab 1)")
+            .font(.title2)
+    }
+}
+
+struct SettingsView: View {
+    var body: some View {
+        Text("App Settings (Tab 2)")
+            .font(.title2)
+    }
+}
+
+struct ProfileView: View {
+    var body: some View {
+        Text("User Profile (Tab 3)")
+            .font(.title2)
+    }
+}
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
 }
