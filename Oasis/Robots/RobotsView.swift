@@ -18,8 +18,10 @@ struct RobotsView: View {
             }
         }.environmentObject(viewModel)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.customBlack)
             .padding()
+            .padding(.horizontal)
+            .background(Color.customBlack)
+            
     }
 }
 
