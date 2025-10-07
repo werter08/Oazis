@@ -101,27 +101,3 @@ struct CustomHeaderView: View {
     }
 }
 
-struct HomeView: View {
-    var body: some View {
-        Text("Welcome Home! (Tab 1)")
-            .font(.title2)
-    }
-}
-
-struct SettingsView: View {
-    var body: some View {
-        Text("App Settings (Tab 2)")
-            .font(.title2)
-    }
-}
-
-struct ProfileView: View {
-    var body: some View {
-        Text("User Profile (Tab 3)")
-            .font(.title2)
-    }
-}
-
-#Preview {
-    ContentView()
-}
