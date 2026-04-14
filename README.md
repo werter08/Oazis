@@ -1,36 +1,56 @@
-# Oazis: Low Earth Orbit (LEO) Commercialization Challenge App
+# Oazis
 
-## 🛰️ Project Overview
+Oazis is a personal iOS pet project focused on building a futuristic space-station monitoring interface in SwiftUI.  
+The app explores custom UI components, animated visuals, and dashboard-style data presentation for robots and station modules.
 
-Oazis is a companion application developed for the **KCOMERTIZATION Low Earth Orbit (LEO) Challenge**. This application provides a real-time, interactive dashboard for monitoring the status and orbital positions of deployed robotic modules (moduls) on the orbital map.
+## What this app includes
 
-The goal is to demonstrate a user interface solution for tracking assets crucial for LEO commercialization and maintenance.
+- Login screen with a custom neon-style dark theme
+- Dashboard with module cards, status summaries, and progress bars
+- Robots tab with robot list, detail cards, and health/battery indicators
+- Reusable SwiftUI components and style extensions
 
-## 🚀 Getting Started (iOS App)
+## Tech stack
 
-### Prerequisites
+- Swift
+- SwiftUI
+- Xcode project (`Oazis.xcodeproj`)
+- Local mock/demo data (no backend required)
 
-This application is built for the **iOS platform** using **SwiftUI**. You will need Xcode (version 15.0 or later) to build and run the project.
+## Run locally
 
-### Installation
+1. Clone the repository:
 
-1. Clone the repository to your local machine:
-
+```bash
 git clone https://github.com/werter08/Oazis.git
+```
 
-2. Open the project file (`Oazis.xcodeproj`) in Xcode.
+2. Open `Oazis.xcodeproj` in Xcode.
+3. Choose an iOS simulator (or device).
+4. Run with `Cmd + R`.
 
-3. Select a simulator or a physical device and press Run (`⌘ + R`).
+## Demo login
 
-## 🔑## 🔑 Challenge Login Details (Mandatory)
+The current app uses demo credentials in the login screen:
 
-**To access the application's dashboard, you must use the following hardcoded credentials:**
+- Username: `1admin`
+- Password: `1admin`
 
-| **Field** | **Value** | 
-| :--- | :--- | 
-| **Username** | `1admin` | 
-| **Password** | `1admin` | 
+If you change auth logic later, update this section.
 
-***Note:** These credentials are for demonstration within the challenge scope only.*
+## Screenshots
 
-*For any issues or questions regarding the LEO Commercialization Challenge interface, please contact the repository owner.*
+### App screens
+
+![Login Screen](docs/images/login.png)
+![Dashboard](docs/images/dashboard.png)
+![Robot Detail](docs/images/robot-detail.png)
+![Robots List](docs/images/robots-list.png)
+
+### Concept preview (from `presentation.pdf`)
+
+![Presentation Preview](docs/images/presentation-preview.png)
+
+## Project status
+
+This is an active learning/pet project, so UI, architecture, and feature set can change as I iterate.
